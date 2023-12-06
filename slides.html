@@ -414,7 +414,7 @@ Dianne Cook <br> Econometrics and Business Statistics <br> Monash University
 <section id="the-greatest-value-of-a-data-plot-is-when-it-forces-us-to-notice-what-we-never-expected-to-see.-adapted-from-a-tukey-quote." class="slide level2 center">
 <h2>The greatest value of a data plot is when it forces us to notice what we never expected to see. <span style="font-size:30%;font-style:italic;">~Adapted from a Tukey quote. </span></h2>
 <div class="fragment f70">
-<p>It doesn’t mean that it’s easy. It doesn’t mean that visualisation is used alone. It means that an important part of your toolbox, especially to allow discovery of what <em>we don’t know</em>.</p>
+<p>It doesn’t mean that it’s easy. It doesn’t mean that visualisation is used alone. It means that (high-dimensional) visualisation is an important part of your toolbox, especially to allow discovery of what <em>we don’t know</em>.</p>
 </div>
 </section>
 <section id="outline" class="slide level2">
@@ -671,7 +671,7 @@ a_{~41} &amp; a_{~42}\\
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:80.0%" alt="Principal component biplot of the penguins data."></p>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:80.0%" alt="Principal component biplot of the penguins data."></p>
 </figure>
 </div>
 </div>
@@ -682,7 +682,7 @@ a_{~41} &amp; a_{~42}\\
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:80.0%" alt="Dimension reduction with t-SNE on the penguins data shown as a scatterplot."></p>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:80.0%" alt="Dimension reduction with t-SNE on the penguins data shown as a scatterplot."></p>
 </figure>
 </div>
 </div>
@@ -817,7 +817,8 @@ a_{~41} &amp; a_{~42}\\
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">tour_path</span>(<span class="fu">grand_tour</span>(<span class="dv">2</span>), <span class="at">fps =</span> <span class="dv">60</span>, </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">max_bases=</span><span class="dv">40</span>) <span class="sc">|&gt;</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">show_scatter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axes =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axes =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <br>
 <center>
@@ -1367,10 +1368,22 @@ DEMO
 </div>
 </div>
 </section>
-<section id="slice-tour" class="slide level2">
-<h2>Slice tour</h2>
+<section id="slice-tour-12" class="slide level2">
+<h2>Slice tour <span style="font-size:50%;"> (1/2) </span></h2>
+<div class="columns">
+<div class="column f70" style="width:50%;">
+<p>Projection</p>
+<p><img data-src="gifs/torus.gif" alt="Grand tour showing points on the surface of a 3D torus." width="500"></p>
+</div><div class="column f70" style="width:50%;">
+<p>Slice</p>
+<p><img data-src="gifs/torus_slice.gif" alt="Slicetour showing points on the surface of a 3D torus." width="500"></p>
+</div>
+</div>
+</section>
+<section id="slice-tour-22" class="slide level2">
+<h2>Slice tour <span style="font-size:50%;"> (2/2) </span></h2>
 <div class="f70">
-<p>This is especially useful for exploring classification models, comparing boundaries produced by different models.</p>
+<p>This is especially useful for exploring classification models, <strong>comparing boundaries</strong> produced by different models. (The same penguins data used here.)</p>
 </div>
 <div class="columns">
 <div class="column f70" style="width:50%;">
@@ -1391,7 +1404,7 @@ DEMO
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:80.0%" alt="Principal component biplot of the penguins data."></p>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:80.0%" alt="Principal component biplot of the penguins data."></p>
 </figure>
 </div>
 </div>
@@ -1435,7 +1448,7 @@ DEMO
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-16-1.png" style="width:80.0%" alt="Dimension reduction with t-SNE on the penguins data shown as a scatterplot."></p>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:80.0%" alt="Dimension reduction with t-SNE on the penguins data shown as a scatterplot."></p>
 </figure>
 </div>
 </div>
@@ -1548,6 +1561,7 @@ DEMO
 <li>Fri 11am: IPS12: Visualising high-dimensional and complex data (Paul Harrison, Jayani Lakshika)</li>
 <li>Fri 1:30pm: CPS09: Visualising Complex data &amp; Anomaly Detection (Janith Wanniarachchi - XAI)</li>
 </ul>
+<p><em>Please use these tools at home</em> 😃</p>
 </section>
 <section id="references-and-acknowledgements" class="slide level2">
 <h2>References and acknowledgements</h2>
@@ -1564,14 +1578,14 @@ DEMO
 <section id="model-based---2d-13" class="slide level2" data-visibility="uncounted">
 <h2>Model-based - 2D <span style="font-size:30%;"> (1/3) </span></h2>
 
-<img data-src="slides_files/figure-revealjs/unnamed-chunk-20-1.png" style="width:80.0%" alt="BIC values for a range of models and number of clusters for 2D data, alongside a plot of the data with the ellipses corresponding to the best model overlaid." class="r-stretch quarto-figure-center"><center>
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:80.0%" alt="BIC values for a range of models and number of clusters for 2D data, alongside a plot of the data with the ellipses corresponding to the best model overlaid." class="r-stretch quarto-figure-center"><center>
 <span style="font-size:30%;"> <a href="https://dicook.github.io/mulgar_book/10-model-based.html">Table of model types</a> </span>
 </center>
 </section>
 <section id="model-based---4d-23" class="slide level2" data-visibility="uncounted">
 <h2>Model-based - 4D <span style="font-size:30%;"> (2/3) </span></h2>
 
-<img data-src="slides_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:80.0%" alt="BIC values for a range of models and number of clusters." class="r-stretch quarto-figure-center"></section>
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-22-1.png" style="width:80.0%" alt="BIC values for a range of models and number of clusters." class="r-stretch quarto-figure-center"></section>
 <section id="model-based-33-which-fits-the-data-better" class="slide level2" data-visibility="uncounted">
 <h2>Model-based <span style="font-size:30%;"> (3/3) </span> <span style="font-size:70%;"> ~~Which fits the data better? </span></h2>
 <div class="columns">
@@ -1596,7 +1610,7 @@ DEMO
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-22-1.png" style="width:80.0%" alt="Convex hulls around three clusters in 2D"></p>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-23-1.png" style="width:80.0%" alt="Convex hulls around three clusters in 2D"></p>
 </figure>
 </div>
 </div>

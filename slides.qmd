@@ -73,7 +73,7 @@ We are going to see that we can gain intuition for structure in high dimensions 
 ## The greatest value of a data plot is when it forces us to notice what we never expected to see. <span style="font-size:30%;font-style:italic;">~Adapted from a Tukey quote. </span> {.center}
 
 ::: {.fragment .f70}
-It doesn't mean that it's easy. It doesn't mean that visualisation is used alone. It means that an important part of your toolbox, especially to allow discovery of what *we don't know*. 
+It doesn't mean that it's easy. It doesn't mean that visualisation is used alone. It means that (high-dimensional) visualisation is an important part of your toolbox, especially to allow discovery of what *we don't know*. 
 :::
 
 ## Outline
@@ -282,6 +282,41 @@ The 2D data </span>
 
 ::: {.column width="60%" style="font-size: 50%;" .center}
 
+```{r}
+#| echo: false
+#| eval: false
+library(tourr)
+library(geozoo)
+set.seed(1351)
+d <- torus(3, n=4304)$points
+d <- apply(d, 2, function(x) (x-mean(x))/sd(x))
+colnames(d) <- paste0("x", 1:3)
+d <- data.frame(d)
+animate_xy(d, axes="bottomleft")
+animate_slice(d, axes="bottomleft")
+set.seed(606)
+path_t2 <- save_history(d, little_tour(), 4)
+render_gif(d, 
+           planned_tour(path_t2),
+           display_xy(col="#EC5C00",
+             half_range=3,
+             axes="bottomleft"),
+           gif_file = "gifs/torus.gif",
+           apf = 1/75,
+           frames = 1000,
+           width = 400, 
+           height = 300)
+render_gif(d, 
+           planned_tour(path_t2),
+           display_slice(col="#EC5C00",
+             half_range=3,
+             axes="bottomleft"),
+           gif_file = "gifs/torus_slice.gif",
+           apf = 1/75,
+           frames = 1000,
+           width = 400, 
+           height = 300)
+```
 
 ![](gifs/explain_2d.gif){width=500 fig-alt="Grand tour showing points on the surface of a 3D torus."}
 
@@ -622,7 +657,8 @@ detour(penguins_sub[,1:4],
        tour_path(grand_tour(2), fps = 60, 
                  max_bases=40) |>
        show_scatter(alpha = 0.7, 
-                    axes = FALSE)
+                    axes = FALSE, 
+                    size = 2)
 ```
 
 <br><center> DEMO </center>
@@ -644,55 +680,6 @@ p_cl <- p_cl %>%
 p_cl <- p_cl %>% 
   mutate(cl_w_j = jitter(cl_w),
          cl_mc_j = jitter(cl_mc))
-
-# Arranging by cluster id is important to define edges 
-penguins_cl <- penguins_sub %>%
-  mutate(cl_w = p_cl$cl_w,
-         cl_mc = p_cl$cl_mc) %>%
-  arrange(cl_w)
-
-psub <- penguins_cl %>%
-  select(bl, bd) 
-dup <- duplicated(psub)
-psub <- penguins_cl %>%
-  select(bl, bd, cl_w) %>%
-  filter(!dup) %>%
-  arrange(cl_w)
-
-ncl <- psub %>%
-  count(cl_w) %>%
-  arrange(cl_w) %>%
-  mutate(cumn = cumsum(n))
-phull <- NULL
-for (i in unique(psub$cl_w)) {
-  x <- psub %>%
-    dplyr::filter(cl_w == i) %>%
-    select(bl, bd) 
-  ph <- cxhull(as.matrix(x))$edges
-  if (i > 1) {
-    ph <- ph + ncl$cumn[i-1]
-  }
-  ph <- cbind(ph, rep(i, nrow(ph)))
-  phull <- rbind(phull, ph)
-}
-phull <- as.data.frame(phull)
-colnames(phull) <- c("from", "to", "cl_w") 
-phull_segs <- data.frame(x = psub$bl[phull$from],
-                         y = psub$bd[phull$from],
-                         xend = psub$bl[phull$to],
-                         yend = psub$bd[phull$to],
-                         cl_w = phull$cl_w)
-phull_segs$cl_w <- factor(phull$cl_w) 
-psub$cl_w <- factor(psub$cl_w)
-p_chull2D <- ggplot() +
-  geom_point(data=psub, aes(x=bl, y=bd, 
-                            colour=cl_w)) + 
-  geom_segment(data=phull_segs, aes(x=x, xend=xend,
-                                    y=y, yend=yend,
-                                    colour=cl_w)) +
-  scale_colour_discrete_divergingx(palette = "Zissou 1") +
-  theme_minimal() +
-  theme(aspect.ratio = 1)
 ```
 
 :::: {.columns}
@@ -827,10 +814,29 @@ Removing bill length
 
 ::::
 
-## Slice tour 
+## Slice tour <span style="font-size:50%;"> (1/2) </span>
+
+:::: {.columns}
+
+::: {.column .f70 width=50%}
+
+Projection
+
+![](gifs/torus.gif){width=500 fig-alt="Grand tour showing points on the surface of a 3D torus."}
+:::
+
+::: {.column .f70 width=50%}
+
+Slice
+
+![](gifs/torus_slice.gif){width=500 fig-alt="Slicetour showing points on the surface of a 3D torus."}
+:::
+::::
+
+## Slice tour <span style="font-size:50%;"> (2/2) </span>
 
 ::: {.f70}
-This is especially useful for exploring classification models, comparing boundaries produced by different models.
+This is especially useful for exploring classification models, **comparing boundaries** produced by different models. (The same penguins data used here.)
 :::
 
 :::: {.columns}
@@ -1102,6 +1108,8 @@ Talks at this conference to learn more:
 - Fri 11am: IPS12: Visualising high-dimensional and complex data (Paul Harrison, Jayani Lakshika)
 - Fri 1:30pm: CPS09: Visualising Complex data & Anomaly Detection (Janith Wanniarachchi - XAI)
 
+*Please use these tools at home* 😃
+
 ## References and acknowledgements
 
 - Cook and Laa (2023) [Interactively exploring high-dimensional data and models in R](https://dicook.github.io/mulgar_book/)
@@ -1191,6 +1199,57 @@ Convex hulls are often used to summarise clusters in 2D. It is possible to view 
 
 ::: {.column width=50%}
 
+```{r}
+#| eval: false
+# Arranging by cluster id is important to define edges 
+penguins_cl <- penguins_sub %>%
+  mutate(cl_w = p_cl$cl_w,
+         cl_mc = p_cl$cl_mc) %>%
+  arrange(cl_w)
+
+psub <- penguins_cl %>%
+  select(bl, bd) 
+dup <- duplicated(psub)
+psub <- penguins_cl %>%
+  select(bl, bd, cl_w) %>%
+  filter(!dup) %>%
+  arrange(cl_w)
+
+ncl <- psub %>%
+  count(cl_w) %>%
+  arrange(cl_w) %>%
+  mutate(cumn = cumsum(n))
+phull <- NULL
+for (i in unique(psub$cl_w)) {
+  x <- psub %>%
+    dplyr::filter(cl_w == i) %>%
+    select(bl, bd) 
+  ph <- cxhull(as.matrix(x))$edges
+  if (i > 1) {
+    ph <- ph + ncl$cumn[i-1]
+  }
+  ph <- cbind(ph, rep(i, nrow(ph)))
+  phull <- rbind(phull, ph)
+}
+phull <- as.data.frame(phull)
+colnames(phull) <- c("from", "to", "cl_w") 
+phull_segs <- data.frame(x = psub$bl[phull$from],
+                         y = psub$bd[phull$from],
+                         xend = psub$bl[phull$to],
+                         yend = psub$bd[phull$to],
+                         cl_w = phull$cl_w)
+phull_segs$cl_w <- factor(phull$cl_w) 
+psub$cl_w <- factor(psub$cl_w)
+p_chull2D <- ggplot() +
+  geom_point(data=psub, aes(x=bl, y=bd, 
+                            colour=cl_w)) + 
+  geom_segment(data=phull_segs, aes(x=x, xend=xend,
+                                    y=y, yend=yend,
+                                    colour=cl_w)) +
+  scale_colour_discrete_divergingx(palette = "Zissou 1") +
+  theme_minimal() +
+  theme(aspect.ratio = 1)
+```
 
 ```{r}
 #| fig-alt: "Convex hulls around three clusters in 2D"
